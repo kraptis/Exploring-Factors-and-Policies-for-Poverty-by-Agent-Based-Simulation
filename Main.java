@@ -185,12 +185,10 @@ public class Main extends SimState{
 
             for(int i=0;i<abc.men_agents.size();i++){
                 schedule.scheduleRepeating(abc.men_agents.get(i));
-                //sn.men_agents.add(i);
             }
 
             for(int i=0;i<abc.women_agents.size();i++){
                 schedule.scheduleRepeating(abc.women_agents.get(i));
-               // sn.women_agents.add(i);
             }
 
             for(int i=0;i<Social_Norms.boys_agents.size();i++){
@@ -213,8 +211,7 @@ public class Main extends SimState{
             schedule.scheduleRepeating(sp);
             schedule.scheduleRepeating(ei);
 
-           // Charts charts = new Charts();
-           // schedule.scheduleRepeating(charts);
+           
             double temp=0.0;
        
         
