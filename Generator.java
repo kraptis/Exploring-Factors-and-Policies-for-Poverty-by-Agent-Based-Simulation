@@ -28,13 +28,13 @@ public class Generator {
     public Integer men=0;
     public Integer children=0;
 
-    public Integer officials_behavior=0;// 0-10, 0 asximi- 10 aristi
+    public Integer officials_behavior=0;// 0-10, 0 bad- 10 great
 
-    public Double immigration=0.0; // diathesi metansteysis tis koinotitas
-    public Double education=0.0; // diathesi ekpaideysis tis koinotitas
+    public Double immigration=0.0; // disposion of community's immigration
+    public Double education=0.0; // disposion of community's education
     public Double quality_of_life=0.0;
     public Integer minorities=0;//
-    public Vector buisness_norms = new Vector();//1h thesi buisness A, 2h thesi B etc.... 1 allowed, 0 not allowed
+    public Vector buisness_norms = new Vector();//1st buisness A, 2nd B etc.... 1 allowed, 0 not allowed
     
     public Integer accesibility=0;// 0-10
     public Integer techdevelop=0;// 0-10
@@ -95,16 +95,16 @@ public class Generator {
                 population=5000;//generator.nextInt(5000)+100;//100-5000
                 men= generator.nextInt(55 - 45 + 1)+45;//45-55%
                 women=100-men;
-                old= generator.nextInt(20 - 5 + 1)+5;//5-20% ton men-women
-                children=generator.nextInt(25 - 20 + 1)+20;//18-25% ton men-women
-                single_men=generator.nextInt(25 - 5 + 1)+5;//5-25% ton men
-                //single_women = single men arithmitika +/- tis ipolipes
-                immigrants=generator.nextInt(6-2+1)+2;//2-6% tou sinolikou plithismou
-                single_women_with_children=generator.nextInt(6)+1;//1-6% ton single women
-                single_men_with_children=generator.nextInt(3)+1;//1-3% ton single men
+                old= generator.nextInt(20 - 5 + 1)+5;//5-20% of men-women
+                children=generator.nextInt(25 - 20 + 1)+20;//18-25% of men-women
+                single_men=generator.nextInt(25 - 5 + 1)+5;//5-25% of men
+                //single_women = single men a +/- rest
+                immigrants=generator.nextInt(6-2+1)+2;//2-6% of population
+                single_women_with_children=generator.nextInt(6)+1;//1-6% of single women
+                single_men_with_children=generator.nextInt(3)+1;//1-3% of single men
                 unemployment=generator.nextInt(20)+1;
                
-                temp=(int) (population * 0.04);//0-4 ilikia
+                temp=(int) (population * 0.04);//0-4 age
                 pososta_plithismou.add(temp);
 
                 temp=(int) (population * 0.05);//5-9
@@ -209,7 +209,7 @@ public class Generator {
 
     class Set_Economic_Structure {
         Integer typesofbuisness=0;
-        public Integer unemployment=0;//??????????tin pernei tin timi?
+        public Integer unemployment=0;
        // public Vector<Vector<Buisness>> buisness = new Vector();//[A(2),B(4),C(1)....]
         Vector<Integer> numberofbuisness = new Vector<Integer>();
         //Buisness buis = new Buisness(2000);//(s_DCh.population-s_DCh.unemployment);
