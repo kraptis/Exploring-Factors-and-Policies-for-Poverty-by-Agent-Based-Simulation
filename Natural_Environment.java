@@ -22,10 +22,8 @@ public class Natural_Environment implements Steppable,java.io.Serializable{
     public static Integer accesibility =0;
     public static Integer techdevelop =0;
 
-    public static Integer clima=0;
-    //natural_resources n_u = new natural_resources();
-    //isolation iso = new isolation();
-    //climate cli = new climate();
+    public static Integer clima=0;//climate
+    
     
 
     public void natural_environment(){
@@ -62,17 +60,13 @@ public class Natural_Environment implements Steppable,java.io.Serializable{
             System.out.println("------Accesibility: "+accesibility);
             techdevelop = generator.techdevelop;
             System.out.println("------Tech. develop. : "+techdevelop);
-            //double geoiso =0.0;
             isolation = (0.8 * accesibility + 0.2 * techdevelop);
-          //  if(geoiso > 5)
-          //      state = true;
-         //   else state = false;
+         
         }
 
     }
 
     class climate{
-        //int hostile;
         Generator generator = new Generator();
         public void climate(){
             generator.natural_environment();
