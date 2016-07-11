@@ -17,17 +17,17 @@ public class Buisness {
     //Generator gen = new Generator();
     Random generator = new Random();
 
-    //---katastasi perivallontos pou xreiazontai gia na doulepsoun----
-    //1 tous endiaferei, 0 den tous endiaferei
+    //---representation of the environment----
+    //1 true
     public Integer climate=0;
     public Integer natural_resources=0;
     public Double isolation=0.0;
     public Integer minorities=0;
     public Integer social_norms=0;
-    public Integer institutions=0;//0-10 simperifora ton institouton
+    public Integer institutions=0;//0-10 institutions behavior
     //----------------------------------------------------------------
 
-    //-------xaraktiristika tis kathe etairias----------------------
+    //-------characteristicks of the companiess----------------------
     Integer skills_levels=10;
     Vector<Vector<Integer>> characteristics = new Vector();
     
@@ -45,14 +45,11 @@ public class Buisness {
         institutions=generator.nextInt(11);
 
 
-//!!!!!!!!!!!! prepei na eisago ton mikrotero kai ton megalitero mistho oste na ipologizete simfona me ta skills
+
         Integer min_wage=1900;
         Integer max_wage=2000;
 
-       // int positions=gen.s_DCh.population-gen.s_DCh.unemployment;
-        //int positions=0;//!!!!!!!!!!!!!!!!!!!!!!!!thelei allagi
-        //Vector temp = new Vector();//prosoxi me temp mporei na min allazei tis times!!!!!!!!!!!!!!!
-        //temp[skills, wage, hours, positions]
+       
         Integer positions=positions2;
        // System.out.println(positions+"----positions--2-2-2-22-");
         for(int i=1;i<=skills_levels;i++){
