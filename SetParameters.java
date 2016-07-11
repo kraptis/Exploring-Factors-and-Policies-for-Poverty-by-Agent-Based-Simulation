@@ -19,7 +19,7 @@ public class SetParameters implements Steppable{
     public static double poverty_treshold=0;
     public static double absolute_poverty_treshold=0;
     public static int immigrants=2;
-    public static Vector<Double> diamesos = new Vector();
+    public static Vector<Double> diamesos = new Vector();//median
 
 
     public void step(SimState state) {
@@ -27,7 +27,6 @@ public class SetParameters implements Steppable{
             for(int i=0;i<Social_Norms.agents.size();i++){
                 if(Social_Norms.agents.get(i).age>=72){
                     diamesos.add(Social_Norms.agents.get(i).totalincome);
-                 //   System.out.println(Social_Norms.agents.get(i).totalincome+"Social_Norms.agents.get(i).totalincome");
                 }
             }
 double d=0;
@@ -37,13 +36,11 @@ double d=0;
 
 
             poverty_treshold=(0.6 * d);
-        //    System.out.println(poverty_treshold+"poverty threshold");
+
           if(state.schedule.getSteps()==2)
                 absolute_poverty_treshold=poverty_treshold;
            
         }
     }
-
-    //na valo antikeimeniki-ipokeimeniki  ktl.............
 
 }
