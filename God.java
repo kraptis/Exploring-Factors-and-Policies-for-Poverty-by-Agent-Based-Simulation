@@ -45,25 +45,16 @@ public class God implements Steppable {
     
 
     Random generator = new Random();
-    //Demographic_Characteristics dch = new Demographic_Characteristics();
     SetParameters sp = new SetParameters();
-   // Create_Man_Agents cma = new Create_Man_Agents();
-    //Create_Women_Agents cwa = new Create_Women_Agents();
-    //Create_Boy_Agents cba = new Create_Boy_Agents();
-    //Create_Girl_Agents cga = new Create_Girl_Agents();
     Economic_Structure es = new Economic_Structure();
     Social_Norms sn = new Social_Norms();
     Dymamics dyn = new Dymamics();
-    //Create_Couples cc = new Create_Couples();
 
     public void step(SimState state) {
 
     }
 
     public void God(int men,int women, int children){
-        //dc.Demographic_Characteristics();
-
-        //System.out.println("----asdasdasdassd--men_agents.get(i1)t"+men+"---------");
 
         int i10=0;
         int i20=0;
@@ -94,20 +85,6 @@ public class God implements Steppable {
             }
         }
 
-        /*for(int i1=0;i1<men;i1++){
-        Create_Man_Agents cma = new Create_Man_Agents();
-        cma.Create_Man_Agents();
-        men_agents.add(cma.agent);
-        //System.out.println("------men_agents.get(i1)t"+men_agents.get(i1).id+"---------");
-        }
-        // System.out.println("------men_agents.get(i1)tsize"+men_agents.size()+"---------");
-        // System.out.println("-wo---asdasdasdassd--men_agents.get(i1)t"+women+"---------");
-        for(int i=0;i<women;i++){
-        Create_Women_Agents cwa = new Create_Women_Agents();
-        cwa.Create_Women_Agents();
-        women_agents.add(cwa.agent);
-        }*/
-         // System.out.println("------women_agents.get(i1)tsize"+women_agents.size()+"---------");
 
         double rand2001 =0.0;
         Random r = new Random();
@@ -125,16 +102,11 @@ public class God implements Steppable {
                 girls_agents.add(cga.agent);
             }
         }
-        /*for(int i=0;i<children/2;i++){
-        Create_Girl_Agents cga = new Create_Girl_Agents();
-        cga.Create_Girl_Agents();
-        girls_agents.add(cga.agent);
-        }*/
+      
 
         all_agents.addAll((Collection<? extends Agent>) men_agents.clone());
         all_agents.addAll((Collection<? extends Agent>) women_agents.clone());
-        //all_agents.addAll((Collection<? extends Agent>) boys_agents.clone());
-        //all_agents.addAll((Collection<? extends Agent>) girls_agents.clone());
+        
 
         Collections.shuffle(all_agents);
 
@@ -147,11 +119,6 @@ public class God implements Steppable {
         Create_Families f = new Create_Families();
         f.Create_Families();
 
-        /*for(int i=0;i<families.size();i++)
-        for(int j=0;j<families.get(i).size();j++)
-        for(int m=0;m<families.get(i).get(j).size();m++){
-        System.out.println("--families--"+families.get(i).get(j).get(m).id+"----");
-        }*/
 
         for(int i=0;i<boys_agents.size();i++){
             if(boys_agents.get(i).parents.size()>0){
@@ -170,17 +137,14 @@ public class God implements Steppable {
         
 
         Social_Norms.agents=(Vector<Agent>) all_agents.clone();
-      //  System.out.println(Social_Norms.agents.size()+"----sise---");
         Social_Norms.men_agents=(Vector<Agent>) men_agents.clone();
         Social_Norms.women_agents=(Vector<Agent>) women_agents.clone();
-        //Social_Norms.boys_agents=(Vector<Agent>) boys_agents.clone();
-        //Social_Norms.girls_agents=(Vector<Agent>) girls_agents.clone();
         boys_agents.clear();
         girls_agents.clear();
     }
 
     public void dynamic(){
-       // Dymamics dyn = new Dymamics();
+       
         
     }
 
@@ -213,16 +177,12 @@ public class God implements Steppable {
                     Create_Boy_Agents cba = new Create_Boy_Agents();
                     cba.Create_Boy_Agents();
                     cba.agent.age=0;
-                    //Social_Norms.agents.add(cba.agent);
-                    //Social_Norms.boys_agents.add(cba.agent);
                     boys_agents.add(cba.agent);
                 }
                 else{
                     Create_Girl_Agents cga = new Create_Girl_Agents();
                     cga.Create_Girl_Agents();
                     cga.agent.age=0;
-                    //Social_Norms.agents.add(cga.agent);
-                    //Social_Norms.girls_agents.add(cga.agent);
                     girls_agents.add(cga.agent);
                 }
             }
@@ -230,30 +190,17 @@ public class God implements Steppable {
 
             Collections.shuffle(boys_agents);
             Collections.shuffle(girls_agents);
-
-            /*for(int i=0;i<children_per_step/2;i++){
-            Create_Girl_Agents cga = new Create_Girl_Agents();
-            cga.Create_Girl_Agents();
-            cga.agent.age=0;
-            Social_Norms.agents.add(cga.agent);
-            Social_Norms.girls_agents.add(cga.agent);
-            girls_agents.add(cga.agent);
-
-            }*/
-
-            //prepei na skotono agents 10 / 1000
             
 
             Create_Couples cc = new Create_Couples();
             cc.Create_Couples();
 
-            //na vazo ta paidia se oikogeneies      DONE
+           
             Create_Families f = new Create_Families();
             f.Create_Families();
 
             for(int i=0;i<boys_agents.size();i++){
             if(boys_agents.get(i).parents.size()>0){
-                //all_agents.add(boys_agents.get(i));
                 Social_Norms.boys_agents.add(boys_agents.get(i));
                 Social_Norms.agents.add(boys_agents.get(i));
                 state.schedule.scheduleRepeating(boys_agents.get(i));
@@ -263,7 +210,6 @@ public class God implements Steppable {
 
         for(int i=0;i<girls_agents.size();i++){
             if(girls_agents.get(i).parents.size()>0){
-                //all_agents.add(girls_agents.get(i));
                 Social_Norms.agents.add(girls_agents.get(i));
                 Social_Norms.girls_agents.add(girls_agents.get(i));
                 state.schedule.scheduleRepeating(girls_agents.get(i));
@@ -275,7 +221,7 @@ public class God implements Steppable {
             girls_agents.clear();
 
             death_per_step=count1;
-        //    System.out.println("dead,born"+count1+"---+"+death_per_step);
+    
             count1=0;
             double ran100=0;
             double ran200=0;
@@ -317,25 +263,15 @@ public class God implements Steppable {
 
             for(int i=0;i<dead_agents.size();i++){
                 dead_agents.get(i).remove_agent(dead_agents.get(i).id);
-         //       System.out.println("---dead agents size-"+dead_agents.get(i).id);
-         //       System.out.println("---dead agents size"+dead_agents.size());
             }
 
-        //    System.out.println("---dead agents size"+dead_agents.size());
 
             dead_agents.clear();
 
 
-
-            //na vazo metanastes analogos tis theseis ergasias   DONE
-
-
             Add_Immigrants ai = new Add_Immigrants();
             state.schedule.scheduleOnce(ai);
-          //  ai.Add_Immigrants();
-
-            
-            //na allazo tou tipous ton agents   DONE
+         
             double ran15=0;
             for(int i=0;i<Social_Norms.agents.size();i++){
                 ran15=generator.nextDouble();
@@ -391,7 +327,7 @@ public class God implements Steppable {
                 }
             }
 
-            //na ksanaftixno to social network
+            //rebuild the social network
             double ran20=0.0;
             double ran40=0.0;
             int ran30=0;
@@ -425,7 +361,7 @@ public class God implements Steppable {
             
             Vector<Double> d = new Vector();
 
-         //ipologismos neon timon se social norms                  DONE
+         //calculate new social norms values
             if(state.schedule.getSteps()>1){
                 double temp1=0.0;
                 for(int i=0;i<Social_Norms.agents.size();i++){
@@ -444,9 +380,7 @@ public class God implements Steppable {
             }
 
             d.clear();
-
-        //    System.out.println("=123==Social_Norms.quality_of_life"+Social_Norms.quality_of_life+"-");
-        //    System.out.println("=123==Social_Norms.quality_of_life diamesos"+d2*0.8+"-");
+;
 
             double temp2=0.0;
             for(int i=0;i<Social_Norms.agents.size();i++){
@@ -455,7 +389,7 @@ public class God implements Steppable {
             }
             Social_Norms.education=temp2/Social_Norms.agents.size();
 
-       //     System.out.println("=123==Social_Norms.education"+Social_Norms.education+"-");
+    
 
             double temp3=0.0;
             for(int i=0;i<Social_Norms.agents.size();i++){
@@ -463,13 +397,6 @@ public class God implements Steppable {
                 temp3=temp3+Social_Norms.agents.get(i).immigration;
             }
             Social_Norms.immigration=temp3/Social_Norms.agents.size();
-
-      //     System.out.println("=123==Social_Norms.immigration"+Social_Norms.immigration+"-");
-
-
-
-
-
             
         }
 
@@ -481,7 +408,7 @@ public class God implements Steppable {
     int females_count=0;
     
 
- //   class Create_Man_Agents implements Steppable {
+
 
    public class Create_Man_Agents  {
        Agent agent = new Agent();
@@ -493,18 +420,16 @@ public class God implements Steppable {
        int quality_rates=0;
 
       public void Create_Man_Agents(){
-   //     public void step(SimState state) {
-       //   System.out.println("------population men m,esa ston agent"+dc.men+"---------");
-      //    for(int i1=0;i1<dc.men;i1++){
+   
             countid++;
-           // Agent agent = new Agent();
+         
             agent.id=countid;
             agent.gender=0;
             agent.adult=1;
             agent.evolution=Social_Norms.education+((generator.nextInt(10)-5)/100)*Social_Norms.education;
             agent.immigration=Social_Norms.immigration+((generator.nextInt(10)-5)/100)*Social_Norms.immigration;
             agent.quality_of_life=(double)generator.nextInt(600);
-            //agent.quality_of_life=generator.nextInt(10);
+           
 
             for(int i=0;i<Demographic_Characteristics.skills_pos.size();i++){
                 if(Demographic_Characteristics.skills_pos.get(i)>0){
@@ -590,47 +515,7 @@ public class God implements Steppable {
 
           
 
-//System.out.println("------------"+agent.id+"id");
-        //    if(state.schedule.getSteps()==0){
-    //    System.out.println("------------"+Economic_Structure.buisness.size()+"es.buisness.size()");
-    /*            a:
-                for(int i=0;i<es.buisness.size();i++){
-                   // System.out.println("----------xcvxcvxcvxcv-");
-                    for(int j=0;j<es.buisness.get(i).size();j++){
-                        for(int m=0;m<es.buisness.get(i).get(j).characteristics.size();m++){
-                            int ran1=generator.nextInt(100);
-                            int ran2=generator.nextInt(400)-200;
-                            if(es.buisness.get(i).get(j).characteristics.get(m).get(0)==agent.skills && es.buisness.get(i).get(j).characteristics.get(m).get(3)!=0 && ran1>15){
-                                agent.wage=es.buisness.get(i).get(j).characteristics.get(m).get(1)+ran2;
-                                //System.out.println("------------"+es.buisness.get(i).get(j).characteristics.get(m).get(3)+"posi");
-                                 es.buisness.get(i).get(j).characteristics.get(m).set(3,es.buisness.get(i).get(j).characteristics.get(m).get(3)-1);
-                                count1++;
-                                //System.out.println("----------xcvxcvxcvxcv-");
-                                break a;
-                            }
-                        }
-                    }
-                }*/
-          //  }
 
-
-            
-           // System.out.println("------------"+men_agents.size()+"men_agents.size()");
-
-            //---------------------------------vrikan--------
-
-      //      if(state.schedule.getSteps()==death){
-      //          System.out.println("------------i am dead");
-     //           state.finish();
-      //      }
-
-
-         //   System.out.println("------------"+count1+"wage");
-         //   System.out.println("------------"+agent.avoid_poverty+"avoid poverty");
-            //agent.wage=generator.nextInt(1000);
-            //System.out.println("------------"+agent.wage+"wage");
-
-     //       }
             
         }
 
@@ -737,50 +622,7 @@ public class God implements Steppable {
             agent.life_criteria.add(clime_rate);
             agent.life_criteria.add(imigrants_rate);
             agent.life_criteria.add(isolation_rate);
- //women_agents.add(agent);
 
-
-            //---------vriskoun oi agents doulia sto proto step!!!!!!!
-            // i prospathoun otan enilikionontai
-
-//System.out.println("------------"+death+"death");
-     //       if(state.schedule.getSteps()==0){
-
-   /*             a:
-                for(int i=0;i<es.buisness.size();i++){
-                   // System.out.println("----------xcvxcvxcvxcv-");
-                    for(int j=0;j<es.buisness.get(i).size();j++){
-                        for(int m=0;m<es.buisness.get(i).get(j).characteristics.size();m++){
-                            int ran1=generator.nextInt(100);
-                            int ran2=generator.nextInt(400)-200;
-                            if(es.buisness.get(i).get(j).characteristics.get(m).get(0)==agent.skills && es.buisness.get(i).get(j).characteristics.get(m).get(3)!=0&& ran1>15){
-                                agent.wage=es.buisness.get(i).get(j).characteristics.get(m).get(1)+ran2;
-                                //System.out.println("------------"+es.buisness.get(i).get(j).characteristics.get(m).get(3)+"posi");
-                                 es.buisness.get(i).get(j).characteristics.get(m).set(3,es.buisness.get(i).get(j).characteristics.get(m).get(3)-1);
-                                count1++;
-                                //System.out.println("----------xcvxcvxcvxcv-");
-                                break a;
-                            }
-                        }
-                    }
-                }*/
-        //    }
-
-            //---------------------------------vrikan--------
-
-
-           
-
-     //       if(state.schedule.getSteps()==death){
-      //          System.out.println("------------i am dead");
-      //          state.finish();
-     ///       }
-
-
-         //   System.out.println("------------"+count1+"wage");
-          //  System.out.println("------------"+agent.avoid_poverty+"avoid poverty");
-            //agent.wage=generator.nextInt(1000);
-            //System.out.println("------------"+agent.wage+"wage");
 
         }
 
@@ -1057,10 +899,7 @@ public class God implements Steppable {
             double rand2001 =0.0;
             Random r = new Random();
 
-           // boys_temp = (Vector<Agent>) boys_agents.clone();//!!!!!!!!!!!!!!!theleii shuffle koita sto internet
-           // girls_temp = (Vector<Agent>) girls_agents.clone();//!!!!!!!!!!!!!!!theleii shuffle koita sto internet
-           // Collections.shuffle(boys_temp);
-           // Collections.shuffle(girls_temp);
+         
             Collections.shuffle(couples);
             for(int j=0;j<couples.size();j++){
                 if(couples.get(j).get(0).children.size()==0 && couples.get(j).get(0).tries_to_make_children==0 && couples.get(j).get(1).tries_to_make_children==0)
@@ -1134,8 +973,8 @@ public class God implements Steppable {
 
             int counthelp2=0;
 
-            boys_temp = (Vector<Agent>) boys_agents.clone();//!!!!!!!!!!!!!!!theleii shuffle koita sto internet
-            girls_temp = (Vector<Agent>) girls_agents.clone();//!!!!!!!!!!!!!!!theleii shuffle koita sto internet
+            boys_temp = (Vector<Agent>) boys_agents.clone();
+            girls_temp = (Vector<Agent>) girls_agents.clone();
             Collections.shuffle(boys_temp);
             Collections.shuffle(girls_temp);
             Collections.shuffle(couples);
@@ -1146,9 +985,7 @@ public class God implements Steppable {
                     help=0;
 
                 po1=generator.nextInt(2);
-              //  if(po1==0)
-               //     numberofchildren=generator.nextInt(5);
-             //   else
+             
                     numberofchildren=generator.nextInt(4);
                     counthelp2=counthelp2+numberofchildren;
                     System.out.println("#children--"+numberofchildren+"--"+counthelp2);
@@ -1188,8 +1025,7 @@ public class God implements Steppable {
                 children.clear();
             }
 
-           // System.out.println("families 1"+families.size());
-            //System.out.println("counthelp"+counthelp);
+          
             counthelp=0;
 
             double rand2001 =0.0;
@@ -1204,7 +1040,7 @@ public class God implements Steppable {
                 if(men_temp.get(i).partner.size()==0 && rand2001>0.9995&& men_temp.get(i).children.size()==0){
                     numberofchildren=generator.nextInt(3);
                     single_fam.add(men_temp.get(i));
-                    //System.out.println("----xaa--a---xa-----xaaxaxax------");
+                   
                     oti++;
                     for(int j=0;j<numberofchildren;j++){
                         gender=generator.nextInt(2);
@@ -1232,11 +1068,11 @@ public class God implements Steppable {
                     children.clear();
                     single_fam.clear();
                 }
-                //!!!!!!!!!!!!!!!!!!!!!!!dokimastioko
+               
                 
             }
 
-           // System.out.println("families 2"+families.size());
+          
 
             for(int i=0;i<women_temp.size();i++){
                 rand2002 = r.nextDouble();
@@ -1281,7 +1117,7 @@ public class God implements Steppable {
                 
             }
 
-         //   System.out.println("families 3"+families.size());
+        
 
             if(count_loops==0){
                Social_Norms.couples.addAll((Collection<? extends Vector<Agent>>) couples.clone());
@@ -1291,7 +1127,7 @@ public class God implements Steppable {
             else{
                 for(int i=old_num_couples;i<couples.size();i++){
                   couples_temp.add((Vector<Agent>) couples.get(i).clone());
-           //       System.out.println("mpika poi");
+         
                 }
                 old_num_couples=count_couples;
             }
@@ -1301,9 +1137,7 @@ public class God implements Steppable {
             couples_temp.clear();
             families.clear();
 
-          //  System.out.println("oti--"+oti);
-            //System.out.println("oti--"+families.size());
-            //System.out.println("oti--"+Social_Norms.families.size());
+       
         }
         
     }
@@ -1373,13 +1207,6 @@ public class God implements Steppable {
             int old_positions=0;
            
             public void step(SimState state){
-                /*for(int i=0;i<Economic_Structure.buisness.size();i++){
-                for(int j=0;j<Economic_Structure.buisness.get(i).size();j++){
-                for(int m=0;m<Economic_Structure.buisness.get(i).get(j).characteristics.size();m++){
-                positions=positions+Economic_Structure.buisness.get(i).get(j).characteristics.get(m).get(3);
-                }
-                }
-                }*/
                 if(state.schedule.getSteps()>5){
                 old_positions=0;
 
@@ -1394,23 +1221,6 @@ public class God implements Steppable {
                     }
             }
 
-                /*for(int i50=0;i50<Social_Norms.agents.size();i50++){
-                if(Social_Norms.agents.get(i50).wage==0 && Social_Norms.agents.get(i50).age>72){
-                count100++;
-                }
-                }
-
-                if(count100/Social_Norms.agents.size()<4)
-                immigrants=(int) (0.005 * Social_Norms.agents.size());
-
-                else if(count100/Social_Norms.agents.size()<7 && count100/Social_Norms.agents.size()>3)
-                immigrants=(int) (0.0025 * Social_Norms.agents.size());
-
-                else if(count100/Social_Norms.agents.size()>6 && count100/Social_Norms.agents.size()<11)
-                immigrants=(int) (0.0001 * Social_Norms.agents.size());
-
-                else
-                immigrants=0;*/
 
                 immigrants=(old_positions/10)/4;//gia kathe 10 kenes theseis ergasias 1 metanastis(ton xrono) dia 4 mines pou einai to kathe loop
               System.out.println("immigrants+++"+immigrants);
@@ -1495,9 +1305,7 @@ public class God implements Steppable {
                 }
             }
 
-            /*public void step(SimState state) {
-
-            }*/
+           
         }
 
 }
