@@ -45,14 +45,14 @@ public class Agent implements Steppable,java.io.Serializable{
     public Double family_quality_of_life=0.0;
     public Double totalincome=0.0;
     public Double work_hours=0.0;
-    public Vector<Integer> work=new Vector();// i etaireia pou ergazetai
+    public Vector<Integer> work=new Vector();// the company that the agent works
     public Vector<Agent> socialnetwork = new Vector();
     public Integer findjob=0;
     public Integer death=0;
-    public Vector<Integer> life_criteria = new Vector();//[poiotita zois koinotita,misthos,institouta,clima,metanastes,isolation,]pososta kritition poiotita zois
-    public Integer kill_agent=0;//kill 1, leave 0
-    public Integer retired=0;//1 sintaksiouxos
-    public Integer tries_to_make_children=0;//prospathies na kanei paidia, voithitiki metavliti gia statistika
+    public Vector<Integer> life_criteria = new Vector();//[communitys quality of life,income,institutions,climate,immigrants,isolation,]quality of life
+    public Integer kill_agent=0;//kill 1, allive 0
+    public Integer retired=0;//1 true
+    public Integer tries_to_make_children=0;//# of tries an agent has to make children
      //-------------------END-----------------------------
 
 
@@ -68,10 +68,10 @@ public class Agent implements Steppable,java.io.Serializable{
         public void step(SimState state){
             Random rand = new Random();
 
-            this.age++;//kathe step megalonei 3 mines
+            this.age++;//in every loop + 3 months
             if(this.id==1600)
                // System.out.println(this.age+"-------age---");
-            if(this.age==72){//enilikionete otan 18*4 steps
+            if(this.age==72){//an agent become adult when  18*4 steps
                 this.adult=1;
                // System.out.println("adult--");
                 this.parents.clear();
@@ -127,7 +127,7 @@ public class Agent implements Steppable,java.io.Serializable{
             if(partner.size()==0 && parents.size()==2)
             totalincome=(parents.get(0).wage + parents.get(1).wage)*Math.sqrt(1+parents.get(0).children.size());
 
-             //System.out.println(""+life_criteria.size()+"life_criteria size ;akjsdgh;akjsdgf");
+             //System.out.println(""+life_criteria.size()+"life_criteria size");
             //quality_of_life=(life_criteria.get(0)*Social_Norms.quality_of_life)+(life_criteria.get(1)*wage)+(life_criteria.get(2)*Institutions.officials_behavior);//!!!!!!prepei na prostheso klima.metanastes isolation
             if(state.schedule.getSteps()>0)
                 quality_of_life=compute_quality_of_life(quality_of_life, state.schedule.getSteps());
@@ -149,8 +149,8 @@ public class Agent implements Steppable,java.io.Serializable{
                 Find_Job fj0 = new Find_Job();
                 fj0.step(state,1);
 
-                Integer planA=1;// plan update skills
-                Integer planB=2;//plan find new job
+                Integer planA=1;// plan to  his/her update skills
+                Integer planB=2;//plan to find a new job
                 Integer old_wage=0;
                 Integer old_skills=0;
                 Random r = new Random();
@@ -165,7 +165,7 @@ public class Agent implements Steppable,java.io.Serializable{
                 Integer he2=0;
 
                 //System.out.println("---sp-------xcvxcvxcvxcv-"+Social_Norms.education+"spspspspsps"+Social_Norms.immigration+"alalalalallalala");
-                //periptosi anergon h poli ftoxon(poli kato apo orio ftoxias)
+                //unemployment agents or very very poor
                 if((SetParameters.poverty_treshold-totalincome)/SetParameters.poverty_treshold>1/4 && state.schedule.getSteps()>2 && he==0){
                     old_wage=wage;
                     Find_Job fj = new Find_Job();
@@ -176,7 +176,7 @@ public class Agent implements Steppable,java.io.Serializable{
                             immigration=immigration+Math.abs(1/Social_Norms.immigration);
                         if(ran>5)
                             evolution=evolution+Math.abs(1/Social_Norms.education);
-                        if(evolution>Social_Norms.education){//!!!!thelei tsekarisma an ontos pernei to sn.immigration tin timi
+                        if(evolution>Social_Norms.education){
                             old_skills=skills;
                             Update_Skills us = new Update_Skills();
                             us.Update_Skills();
@@ -184,20 +184,20 @@ public class Agent implements Steppable,java.io.Serializable{
                             if(old_skills==skills && ran2>5)
                                 immigration=immigration+Math.abs(1/Social_Norms.immigration);
                         }
-                        if(immigration>Social_Norms.immigration){//!!!!thelei tsekarisma an ontos pernei to sn.immigration tin timi
-                            //diagrafetai apo ergasia an exei, prosoxi mporei na feygei mazi me oikogeneia me pithanotita
+                        if(immigration>Social_Norms.immigration){
+                            //removed from his/her work, removed his/her whole family wit a probability
                             ran3=(r.nextInt(10)+1)*10;
                             ran4=r.nextInt(10)+1;
-                            System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--mporei na figo");
+                            //System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--mporei na figo");
                             if(ran3<50){//kapios tha figei, eite monos tou eite me tin oikogeneia
-                                System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--efiga");
+                                //System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--efiga");
                                 if(partner.size()!=0 || children.size()!=0){
                                     if(ran4>9){//tha figei monos tou
                                         remove_agent(id);
                                         Extract_Information.count_immigration++;
                                         he2=1;
                                     }
-                                    else{//feygei to zeygari i i oikogeneia
+                                    else{//couple or the whole family is removed
                                         remove_family(id);
                                         he2=1;
                                         Extract_Information.count_immigration=Extract_Information.count_immigration+(this.partner.size()+this.children.size()+1);
@@ -239,7 +239,7 @@ public class Agent implements Steppable,java.io.Serializable{
                             immigration=immigration+Math.abs(1/Social_Norms.immigration);
                         if(ran>5)
                             evolution=evolution+Math.abs(1/Social_Norms.education);
-                        if(evolution>Social_Norms.education){//!!!!thelei tsekarisma an ontos pernei to sn.immigration tin timi
+                        if(evolution>Social_Norms.education){
                             old_skills=skills;
                             Update_Skills us = new Update_Skills();
                             us.Update_Skills();
@@ -250,21 +250,20 @@ public class Agent implements Steppable,java.io.Serializable{
 
                   //      System.out.println(immigration+"_im_"+Social_Norms.immigration);
                   //      System.out.println(quality_of_life+"_qua_"+Social_Norms.quality_of_life);
-                        if(immigration>Social_Norms.immigration){//!!!!thelei tsekarisma an ontos pernei to sn.immigration tin timi
-                            //diagrafetai apo ergasia an exei, prosoxi mporei na feygei mazi me oikogeneia me pithanotita
+                        if(immigration>Social_Norms.immigration){
 
-                           System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa2--mporei");
+                          // System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa2--mporei");
                             ran3=(r.nextInt(10)+1)*10;
                             ran4=r.nextInt(10)+1;
-                           if(ran3<50){//kapios tha figei, eite monos tou eite me tin oikogeneia
-                                System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--efiga");
+                           if(ran3<50){//with a probabilty an agent alone or with his/her family will be removed
+                               // System.out.println("eimai meeeeeeeeeeesssssssssssssssaaaaaaaaaaaaaaaa1--efiga");
                                 if(partner.size()!=0 || children.size()!=0){
                                     if(ran4>9){//tha figei monos tou
                                         remove_agent(id);
                                         Extract_Information.count_immigration++;
                                         he2=1;
                                     }
-                                    else{//feygei to zeygari i i oikogeneia
+                                    else{//couple or family
                                         remove_family(id);
                                         he2=1;
                                         Extract_Information.count_immigration=Extract_Information.count_immigration+(this.partner.size()+this.children.size()+1);
@@ -287,12 +286,12 @@ public class Agent implements Steppable,java.io.Serializable{
                 if(random3456<0.001){
                     System.out.println("kasfhks");
                     if(partner.size()!=0 || children.size()!=0){
-                                    if(ran4>9){//tha figei monos tou
+                                    if(ran4>9){//alone
                                         remove_agent(id);
                                         Extract_Information.count_immigration++;
                                         he2=1;
                                     }
-                                    else{//feygei to zeygari i i oikogeneia
+                                    else{//as couple or family
                                         remove_family(id);
                                         he2=1;
                                         Extract_Information.count_immigration=Extract_Information.count_immigration+(this.partner.size()+this.children.size()+1);
@@ -358,9 +357,9 @@ public class Agent implements Steppable,java.io.Serializable{
 
 
     public void remove_agent(int agentid){
-        if(wage!=0 && work.size()!=0){//exei proigoumenei doulia pou prepei na afisei(paraitisi)
+        if(wage!=0 && work.size()!=0){//quit a job
             Economic_Structure.buisness.get(work.get(0)).get(work.get(1)).characteristics.get(work.get(2)).set(3,Economic_Structure.buisness.get(work.get(0)).get(work.get(1)).characteristics.get(work.get(2)).get(3)+1);
-            work.clear();//!!!!!!prosoxi mipos den svinontai
+            work.clear();
         }
 
         for(int i=0;i<Social_Norms.agents.size();i++){
@@ -417,12 +416,7 @@ public class Agent implements Steppable,java.io.Serializable{
         kill_agent=1;
     }
 
-    /*public void remove_couple(int agentid){
-    if(wage!=0){//exei proigoumenei doulia pou prepei na afisei(paraitisi)
-    Economic_Structure.buisness.get(work.get(0)).get(work.get(1)).characteristics.get(work.get(2)).set(3,Economic_Structure.buisness.get(work.get(0)).get(work.get(1)).characteristics.get(work.get(2)).get(3)+1);
-    work.clear();//!!!!!!prosoxi mipos den svinontai
-    }
-    }*/
+   
 
     public void remove_family(int agentid){
         int i=0;
@@ -571,9 +565,9 @@ public class Agent implements Steppable,java.io.Serializable{
         int done=0;
         if(plan==1){
 
-            //prospathei na anavathmisei ta skills
-            //an ta kataferei done==1, mexri na ta kataferi to thread prepei na menei
-            // anoixto!!!!!!!!!!!!!!!!!!!!!!
+            //trying to upgrade his/her skills
+            //until succeed the trhread is still opened
+            // 
 
             if(done==1){
                 done=0;
@@ -583,9 +577,9 @@ public class Agent implements Steppable,java.io.Serializable{
 
         if(plan==2){
 
-            //prospathei na vrei nea ergasia me vasi ta nea skills
-            //an ta kateferei i liksei i ipomoni tou done=1
-            //to thread menei anoixto mexri na ginei kati apo ayta!!!!!!!!!!!!!!!
+            //trying to upgrade his/her skills
+            //until succeed the trhread is still opened
+            // 
 
              if(done==1){
                 done=0;
@@ -644,7 +638,7 @@ public class Agent implements Steppable,java.io.Serializable{
         int random=0;
         public void Update_Skills(){
             this.random=this.r.nextInt(100);
-            if(this.random<3 && skills<10){   //exoun 3% pithanotita na ekpaideytoun
+            if(this.random<3 && skills<10){   //3% probabilty to get education and upgrade their skills
                 skills++;
             }
         }
