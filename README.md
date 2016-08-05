@@ -2,7 +2,7 @@
 
 
 Downlad and install the mason tool from here: http://cs.gmu.edu/~eclab/projects/mason/
-Add the classes in a folder with the name poverty_v3 and add the folder into the Mason Source Packages.
+Add the classes in a folder with the name poverty_v3 and add that folder into the Mason Source Packages.
 Run Poverty_with_UI
 
 #MASON:
